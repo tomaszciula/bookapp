@@ -53,7 +53,7 @@ const IndexDropdown = () => {
             bookcard
           </a>
         </Link>
-        <Link href="/login">
+        <Link href="/dashboard">
           <a
             href="#pablo"
             className={
