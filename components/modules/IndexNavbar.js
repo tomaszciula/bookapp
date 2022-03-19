@@ -1,11 +1,13 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // components
 
 import IndexDropdown from "./IndexDropdown";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const router = useRouter();
   return (
     <>
       <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
@@ -42,16 +44,18 @@ export default function Navbar(props) {
                 <button
                   className="bg-gray-800 text-white active:bg-gray-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
+                  onClick={() => router.push("/login")}
                 >
-                  Login
+                  Zaloguj
                 </button>
               </li>
               <li>
                 <button
                   className="bg-gray-800 text-white active:bg-gray-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
+                  onClick={() => router.push("/register")}
                 >
-                  Sign in
+                  Zarejestruj
                 </button>
               </li>
             </ul>
