@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { createPopper } from "@popperjs/core";
 
-const IndexDropdown = () => {
+const PagesDropdown = () => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -19,7 +19,7 @@ const IndexDropdown = () => {
   return (
     <>
       <a
-        className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+        className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
         href="#pablo"
         ref={btnDropdownRef}
         onClick={(e) => {
@@ -41,26 +41,26 @@ const IndexDropdown = () => {
             "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
           }
         >
-          Book App
+          Admin Layout
         </span>
-        <Link href="/bookcard">
+        <Link href="/admin/dashboard">
           <a
             href="#pablo"
             className={
               "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
             }
           >
-            bookcard
+            Dashboard
           </a>
         </Link>
-        <Link href="/login">
+        <Link href="/admin/settings">
           <a
             href="#pablo"
             className={
               "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
             }
           >
-            dashboard
+            Settings
           </a>
         </Link>
         <Link href="/admin/tables">
@@ -93,7 +93,6 @@ const IndexDropdown = () => {
         </span>
         <Link href="/login">
           <a
-            href="#pablo"
             className={
               "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
             }
@@ -101,9 +100,8 @@ const IndexDropdown = () => {
             Login
           </a>
         </Link>
-        <Link href="/auth/register">
+        <Link href="/register">
           <a
-            href="#pablo"
             className={
               "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
             }
@@ -144,4 +142,4 @@ const IndexDropdown = () => {
   );
 };
 
-export default IndexDropdown;
+export default PagesDropdown;
