@@ -21,6 +21,7 @@ export default function Login() {
       })
       .then(function (response) {
         const { token } = response.data;
+        console.log(token);
         localStorage.setItem("token", token);
         token ? router.push("/dashboard") : router.push("/login");
         setIsLoading(false);
