@@ -2,14 +2,17 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { API } from "../../constants/path.js";
+import LoadingSpinner from "../elements/LoadingSpinner.js";
 import Auth from "../layouts/Auth.js";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     axios
       .post(`${API}/api/users/`, {
         username: `${email}`,
@@ -18,6 +21,7 @@ export default function Register() {
       .then(function (response) {
         response ? router.push("/login") : router.push("/register");
         console.log(response);
+        setIsLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -46,6 +50,7 @@ export default function Register() {
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form>
+                  {/*
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -59,7 +64,7 @@ export default function Register() {
                       placeholder="Imię"
                     />
                   </div>
-
+  */}
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -111,13 +116,23 @@ export default function Register() {
                   </div>
 
                   <div className="text-center mt-6">
-                    <button
-                      className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={handleSubmit}
-                    >
-                      Utwórz konto
-                    </button>
+                    {isLoading ? (
+                      <button
+                        type="button"
+                        className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        disabled
+                      >
+                        <LoadingSpinner />
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={handleSubmit}
+                      >
+                        Utwórz konto
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>

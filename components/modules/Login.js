@@ -1,16 +1,19 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Auth from "../layouts/Auth";
 import { API } from "../../constants/path";
 import axios from "axios";
 import { useRouter } from "next/router";
+import LoadingSpinner from "../elements/LoadingSpinner";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     axios
       .post(`${API}/auth/`, {
         username: `${email}`,
@@ -20,16 +23,17 @@ export default function Login() {
         const { token } = response.data;
         localStorage.setItem("token", token);
         token ? router.push("/dashboard") : router.push("/login");
+        setIsLoading(false);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
   const handleEmailChange = (event) => {
-    setEmail(event.target.value)
+    setEmail(event.target.value);
   };
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
+    setPassword(event.target.value);
   };
   return (
     <>
@@ -93,13 +97,23 @@ export default function Login() {
                   </div>
 
                   <div className="text-center mt-6">
-                    <button
-                      className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={handleSubmit}
-                    >
-                      Zaloguj mnie
-                    </button>
+                    {!isLoading ? (
+                      <button
+                        className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={handleSubmit}
+                      >
+                        Zaloguj mnie
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        disabled
+                      >
+                        <LoadingSpinner />
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>

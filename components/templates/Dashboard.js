@@ -1,16 +1,61 @@
+import axios from "axios";
 import { useRouter } from "next/router";
-import react from "react";
+import react, { useEffect, useState } from "react";
+import { API } from "../../constants/path";
+import BookCard from "../elements/BookCard";
 import SearchInput from "../elements/SearchInput";
+import AddBook from "../modules/AddBook";
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 
 const Dashboard = () => {
+  const [books, setBooks] = useState([
+    {
+      publisher_name: "",
+      author_name: "",
+      title: "",
+      publication_year: 0,
+      publication_number: 0,
+      comment: "",
+    },
+  ]);
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
   const handleClick = (event) => {
     localStorage.removeItem("token");
     router.push("/");
   };
+  const fetchBooks = async () => {
+    setIsLoading(true);
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${API}/api/books`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setBooks(response.data);
+        console.log(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const handleAddBook = () => {
+    setOpen(true);
+  };
   return (
     <>
-      <header className="w-full bg-gray-600 p-4 flex justify-between items-center">
+      <header className="w-full bg-gray-600 p-4 flex justify-between items-center ">
         <nav className="flex items-center">
           <div className="text-white text-xs hidden sm:block ml-2">
             <a
@@ -29,13 +74,14 @@ const Dashboard = () => {
               href="#"
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer ml-1"
             >
-              Hmmmm...
+              {`Ilość książek: ${books.length}`}
             </a>
             <a
               href="#"
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer ml-1"
+              onClick={handleAddBook}
             >
-              Hmmmm...
+              Dodaj pozycję
             </a>
           </div>
         </nav>
@@ -46,7 +92,7 @@ const Dashboard = () => {
       </header>
 
       <main className="flex w-full h-screen">
-        <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block">
+        <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block ">
           <div className="flex flex-col justify-between h-screen p-4 bg-gray-600">
             <div className="text-sm">
               <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
@@ -94,11 +140,36 @@ const Dashboard = () => {
         </aside>
 
         <section className="w-full p-4">
-          <div className="w-full h-64 border-dashed border-4 p-4 text-md">
-            Dashboard
+          <div className="w-full h-auto flex flex-wrap text-md">
+            {books && books.length > 0 ? (
+              books.map((item) => {
+                return (
+                  <BookCard
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    authors={item.author_name}
+                    publisher={item.publisher_name}
+                    publish_year={item.publication_year}
+                    publish_number={item.publication_number}
+                    comment={item.comment}
+                    books={books}
+                    setBooks={setBooks}
+                  />
+                );
+              })
+            ) : (
+              <p>
+                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w
+                "Dodaj pozycję"
+              </p>
+            )}
           </div>
         </section>
       </main>
+      <Modal open={open} onClose={onCloseModal} center>
+        <AddBook setOpen={setOpen} books={books} setBooks={setBooks} />
+      </Modal>
     </>
   );
 };
