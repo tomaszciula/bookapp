@@ -7,6 +7,7 @@ import SearchInput from "../elements/SearchInput";
 import AddBook from "../modules/AddBook";
 import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
+import EditBook from "../modules/EditBook";
 
 const Dashboard = () => {
   const [books, setBooks] = useState([
@@ -19,11 +20,15 @@ const Dashboard = () => {
       comment: "",
     },
   ]);
+  const [book, setBook] = useState(books[0]);
   const [open, setOpen] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+  const onCloseModal = () => {
+    open ? setOpen(false) : setUpdate(false);
+  };
   const handleClick = (event) => {
     localStorage.removeItem("token");
     router.push("/");
@@ -153,14 +158,17 @@ const Dashboard = () => {
                     publish_year={item.publication_year}
                     publish_number={item.publication_number}
                     comment={item.comment}
-                    books={books}
                     setBooks={setBooks}
+                    setUpdate={setUpdate}
+                    book={book}
+                    setBook={setBook}
                   />
                 );
               })
             ) : (
               <p>
-                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w Dodaj pozycję
+                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w Dodaj
+                pozycję
               </p>
             )}
           </div>
@@ -168,6 +176,9 @@ const Dashboard = () => {
       </main>
       <Modal open={open} onClose={onCloseModal} center>
         <AddBook setOpen={setOpen} books={books} setBooks={setBooks} />
+      </Modal>
+      <Modal open={update} onClose={onCloseModal} center>
+        <EditBook setUpdate={setUpdate} book={book} />
       </Modal>
     </>
   );

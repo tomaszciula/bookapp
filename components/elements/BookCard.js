@@ -1,6 +1,6 @@
 import axios from "axios";
 import Router from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "../../constants/path";
 
 const BookCard = ({
@@ -11,11 +11,12 @@ const BookCard = ({
   publish_year,
   publish_number,
   comment,
-  books,
   setBooks,
+  setUpdate,
+  book,
+  setBook,
 }) => {
-  const handleDelete = (event) => {
-    event.preventDefault();
+  const handleDelete = () => {
     const token = localStorage.getItem("token");
     axios
       .delete(`${API}/api/books/${id}`, {
@@ -25,11 +26,21 @@ const BookCard = ({
       })
       .then((res) => {
         setBooks(res.data);
-        Router.reload(); 
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+  const handleUpdate = () => {
+    setBook({
+      publisher_name: publisher,
+      author_name: authors,
+      title: title,
+      publication_year: publish_year,
+      publication_number: publish_number,
+      comment: comment,
+    });
+    setUpdate(true);
   };
   return (
     <div className="p-10">
@@ -62,6 +73,7 @@ const BookCard = ({
           <button
             className="bg-gray-900 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
+            onClick={handleUpdate}
           >
             Edytuj
           </button>
