@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import { API } from "../../constants/path";
 
 const EditBook = ({ setUpdate, book }) => {
+    const [state, setState] = useState(book);
 
     const handleChange = (event) => {
         console.log(event);
+        const name = event.target.name;
+        const value = event.target.value;
+        setState({...state, [name]: value})
       };
       const handleUpdateBook = () => {
         const token = localStorage.getItem("token");
@@ -33,7 +37,7 @@ const EditBook = ({ setUpdate, book }) => {
               name="title"
               //placeholder="Tytuł ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.title}
+              value={state.title}
               onChange={handleChange}
             />
             <input
@@ -41,7 +45,7 @@ const EditBook = ({ setUpdate, book }) => {
               name="author_name"
               placeholder="Autorzy ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.author_name}
+              value={state.author_name}
               onChange={handleChange}
             />
             <input
@@ -49,7 +53,7 @@ const EditBook = ({ setUpdate, book }) => {
               name="publisher_name"
               placeholder="Wydawnictwo ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.publisher_name}
+              value={state.publisher_name}
               onChange={handleChange}
             />
             <input
@@ -57,7 +61,7 @@ const EditBook = ({ setUpdate, book }) => {
               name="publication_year"
               placeholder="Rok wydania ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.publication_year}
+              value={state.publication_year}
               onChange={handleChange}
             />
             <input
@@ -65,14 +69,14 @@ const EditBook = ({ setUpdate, book }) => {
               name="publication_number"
               placeholder="Numer wydania ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.publication_number}
+              value={state.publication_number}
               onChange={handleChange}
             />
             <textarea
               name="comment"
               placeholder="Twój komentarz ..."
               className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
-              value={book.comment}
+              value={state.comment}
               onChange={handleChange}
             />
           </div>
