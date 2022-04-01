@@ -160,8 +160,7 @@ const Dashboard = () => {
               })
             ) : (
               <p>
-                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w
-                "Dodaj pozycję"
+                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w Dodaj pozycję
               </p>
             )}
           </div>
