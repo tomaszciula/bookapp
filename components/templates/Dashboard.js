@@ -10,6 +10,7 @@ import "react-responsive-modal/styles.css";
 import EditBook from "../modules/EditBook";
 import MyClock from "../elements/Clock";
 import Clock from "react-clock";
+import Link from "next/link";
 
 const Dashboard = () => {
   const [books, setBooks] = useState([
@@ -103,9 +104,9 @@ const Dashboard = () => {
   */}
         <div className="flex w-full justify-between">
           <div className="text-white">
-          <h2 className="font-mono text-5xl text-gray-200">Twoja domowowa biblioteka</h2>
+          <h2 className="font-mono text-5xl text-gray-200">Twoja domowa biblioteka</h2>
           </div>
-          <div>
+          <div className="w-1/4">
           <SearchInput />
           </div>
         </div>
@@ -128,19 +129,28 @@ const Dashboard = () => {
               <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Mój profil
               </button>
+              <Link href="/about" passHref>
               <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 BookApp
               </button>
-              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300" disabled>
+              </Link>
+              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2" disabled>
                 {`Ilość książek: ${books.length}`}
               </button>
+              <div className="bg-gray-900 text-white p-2 w-full h-60 rounded mt-2 cursor-pointer">
+                Planuję przeczytać:
+                <textarea className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+
+                </textarea>
+
+              </div>
             </div>
             <div className="w-full flex justify-center">
               <Clock value={value}/>
             </div>
             <div className="flex p-3 text-white bg-red-500 rounded cursor-pointer text-center text-sm">
               <button
-                className="rounded inline-flex items-center"
+                className="rounded inline-flex justify-between   items-center"
                 onClick={handleClick}
               >
                 <svg
@@ -161,8 +171,8 @@ const Dashboard = () => {
           </div>
         </aside>
 
-        <section className="w-full p-4">
-          <div className="w-full h-auto flex flex-wrap text-md">
+        <section className="w-full p-4 bg-gray-200">
+          <div className="w-full h-auto flex flex-wrap text-md ">
             {books && books.length > 0 ? (
               books &&
               books.map((item) => {
