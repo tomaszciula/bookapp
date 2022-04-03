@@ -12,6 +12,7 @@ import EditBook from "../modules/EditBook";
 const Dashboard = () => {
   const [books, setBooks] = useState([
     {
+      id: 0,
       publisher_name: "",
       author_name: "",
       title: "",
@@ -23,6 +24,7 @@ const Dashboard = () => {
   const [book, setBook] = useState(books[0]);
   const [open, setOpen] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
@@ -34,7 +36,6 @@ const Dashboard = () => {
     router.push("/");
   };
   const fetchBooks = async () => {
-    setIsLoading(true);
     const token = localStorage.getItem("token");
     axios
       .get(`${API}/api/books`, {
@@ -44,8 +45,6 @@ const Dashboard = () => {
       })
       .then((response) => {
         setBooks(response.data);
-        console.log(response.data);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -147,6 +146,7 @@ const Dashboard = () => {
         <section className="w-full p-4">
           <div className="w-full h-auto flex flex-wrap text-md">
             {books && books.length > 0 ? (
+              books &&
               books.map((item) => {
                 return (
                   <BookCard
@@ -162,6 +162,7 @@ const Dashboard = () => {
                     setUpdate={setUpdate}
                     book={book}
                     setBook={setBook}
+                    books={books}
                   />
                 );
               })

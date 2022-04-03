@@ -5,20 +5,25 @@ import { API } from "../../constants/path";
 import axios from "axios";
 import { useRouter } from "next/router";
 import LoadingSpinner from "../elements/LoadingSpinner";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  //const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    console.log("data: ", data);
     setIsLoading(true);
     axios
-      .post(`${API}/auth/`, {
-        username: `${email}`,
-        password: `${password}`,
-      })
+      .post(`${API}/auth/`, data)
       .then(function (response) {
         const { token } = response.data;
         console.log(token);
@@ -28,6 +33,7 @@ export default function Login() {
       })
       .catch(function (error) {
         console.log(error);
+        setIsLoading(false);
       });
   };
   const handleEmailChange = (event) => {
@@ -52,7 +58,7 @@ export default function Login() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -65,6 +71,7 @@ export default function Login() {
                       name="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
+                      {...register("username", { required: true })}
                       onChange={handleEmailChange}
                     />
                   </div>
@@ -81,6 +88,7 @@ export default function Login() {
                       name="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
+                      {...register("password", { required: true })}
                       onChange={handlePasswordChange}
                     />
                   </div>
@@ -101,8 +109,7 @@ export default function Login() {
                     {!isLoading ? (
                       <button
                         className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={handleSubmit}
+                        type="submit"
                       >
                         Zaloguj mnie
                       </button>
@@ -122,7 +129,7 @@ export default function Login() {
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2">
                 <a
-                  href="#pablo"
+                  href=""
                   onClick={(e) => e.preventDefault()}
                   className="text-blueGray-200"
                 >
@@ -130,7 +137,7 @@ export default function Login() {
                 </a>
               </div>
               <div className="w-1/2 text-right">
-                <Link href="/auth/register">
+                <Link href="/register">
                   <a href="#pablo" className="text-blueGray-200">
                     <small>Utwórz nowe konto</small>
                   </a>

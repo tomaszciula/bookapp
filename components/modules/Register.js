@@ -3,28 +3,38 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { API } from "../../constants/path.js";
 import LoadingSpinner from "../elements/LoadingSpinner.js";
+import { useForm } from "react-hook-form";
 import Auth from "../layouts/Auth.js";
+import { data } from "autoprefixer";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const router = useRouter();
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  //const onSubmit = data => console.log(data);
+  console.log(watch("username")); // watch input value by passing the name of it
+
+  const onSubmit = data => {
     setIsLoading(true);
     axios
-      .post(`${API}/api/users/`, {
-        username: `${email}`,
-        password: `${password}`,
-      })
+      .post(`${API}/api/users/`, data)
       .then(function (response) {
         response ? router.push("/login") : router.push("/register");
         console.log(response);
         setIsLoading(false);
       })
       .catch(function (error) {
+        setError(true);
         console.log(error);
+        setIsLoading(false);
       });
   };
   const handleEmailChange = (event) => {
@@ -49,7 +59,7 @@ export default function Register() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   {/*
                   <div className="relative w-full mb-3">
                     <label
@@ -76,6 +86,7 @@ export default function Register() {
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
+                      {...register("username", { required: true })}
                       onChange={handleEmailChange}
                     />
                   </div>
@@ -91,6 +102,7 @@ export default function Register() {
                       type="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Hasło"
+                      {...register("password", { required: true })}
                       onChange={handlePasswordChange}
                     />
                   </div>
@@ -127,8 +139,7 @@ export default function Register() {
                     ) : (
                       <button
                         className="bg-gray-800 text-white active:bg-gray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={handleSubmit}
+                        type="submit"
                       >
                         Utwórz konto
                       </button>
