@@ -8,6 +8,8 @@ import AddBook from "../modules/AddBook";
 import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import EditBook from "../modules/EditBook";
+import MyClock from "../elements/Clock";
+import Clock from "react-clock";
 
 const Dashboard = () => {
   const [books, setBooks] = useState([
@@ -26,6 +28,7 @@ const Dashboard = () => {
   const [update, setUpdate] = useState(false);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(new Date());
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => {
@@ -54,34 +57,42 @@ const Dashboard = () => {
     fetchBooks();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => setValue(new Date()), 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   const handleAddBook = () => {
     setOpen(true);
   };
   return (
     <>
       <header className="w-full bg-gray-600 p-4 flex justify-between items-center ">
-        <nav className="flex items-center">
+       {/*} <nav className="flex items-center">
           <div className="text-white text-xs hidden sm:block ml-2">
             <a
-              href="#"
+              href=""
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer"
             >
               BookApp
             </a>
             <a
-              href="#"
+              href=""
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer ml-1"
             >
               Ustawienia
             </a>
             <a
-              href="#"
+              href=""
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer ml-1"
             >
               {`Ilość książek: ${books.length}`}
             </a>
             <a
-              href="#"
+              href=""
               className="bg-gray-900 hover:bg-gray-700 p-2 rounded cursor-pointer ml-1"
               onClick={handleAddBook}
             >
@@ -89,9 +100,14 @@ const Dashboard = () => {
             </a>
           </div>
         </nav>
-
-        <div className="w-1/3 ">
+  */}
+        <div className="flex w-full justify-between">
+          <div className="text-white">
+          <h2 className="font-mono text-5xl text-gray-200">Twoja domowowa biblioteka</h2>
+          </div>
+          <div>
           <SearchInput />
+          </div>
         </div>
       </header>
 
@@ -99,27 +115,29 @@ const Dashboard = () => {
         <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block ">
           <div className="flex flex-col justify-between h-screen p-4 bg-gray-600">
             <div className="text-sm">
-              <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Moja biblioteka
-              </div>
+              </button>
 
-              <div className="bg-gray-900 flex justify-between items-center text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
-                <span>Wiadomości</span>
-                <span className="w-4 h-4 bg-blue-600 rounded-full text-white text-center font-normal text-xs">
-                  5
-                </span>
-              </div>
-              <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button
+                className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
+                onClick={handleAddBook}
+              >
+                Dodaj pozycję
+              </button>
+              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Mój profil
-              </div>
-              <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
-                XXX
-              </div>
-              <div className="bg-gray-900 text-white p-2 rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
-                YYY
-              </div>
+              </button>
+              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+                BookApp
+              </button>
+              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300" disabled>
+                {`Ilość książek: ${books.length}`}
+              </button>
             </div>
-
+            <div className="w-full flex justify-center">
+              <Clock value={value}/>
+            </div>
             <div className="flex p-3 text-white bg-red-500 rounded cursor-pointer text-center text-sm">
               <button
                 className="rounded inline-flex items-center"
