@@ -57,7 +57,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               type="text"
               name="title"
               placeholder="Tytuł ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.title || ""}
               onChange={handleChange}
             />
@@ -65,7 +65,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               type="text"
               name="author_name"
               placeholder="Autorzy ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.author_name || ""}
               onChange={handleChange}
             />
@@ -73,7 +73,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               type="text"
               name="publisher_name"
               placeholder="Wydawnictwo ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.publisher_name || ""}
               onChange={handleChange}
             />
@@ -81,7 +81,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               type="text"
               name="publication_year"
               placeholder="Rok wydania ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.publication_year || ""}
               onChange={handleChange}
             />
@@ -89,14 +89,14 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               type="text"
               name="publication_number"
               placeholder="Numer wydania ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.publication_number || ""}
               onChange={handleChange}
             />
             <textarea
               name="comment"
               placeholder="Twój komentarz ..."
-              className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+              className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
               value={book.comment || ""}
               onChange={handleChange}
             />

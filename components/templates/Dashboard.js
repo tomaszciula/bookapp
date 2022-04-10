@@ -71,7 +71,7 @@ const Dashboard = () => {
   };
   return (
     <>
-      <header className="w-full bg-gray-600 p-4 flex justify-between items-center ">
+      <header className="w-full bg-gray-600 p-4 flex justify-between items-center sticky top-0">
        {/*} <nav className="flex items-center">
           <div className="text-white text-xs hidden sm:block ml-2">
             <a
@@ -113,10 +113,10 @@ const Dashboard = () => {
       </header>
 
       <main className="flex w-full h-screen">
-        <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block ">
-          <div className="flex flex-col justify-between h-screen p-4 bg-gray-600">
+        <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block">
+          <div className="flex flex-col justify-between h-screen px-4 bg-gray-600">
             <div className="text-sm">
-              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button className="bg-gray-900 text-white p-2 w-full rounded cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Moja biblioteka
               </button>
 

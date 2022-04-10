@@ -58,9 +58,9 @@ const BookCard = ({
     <div className="p-10" id={id}>
       <div className="max-w-sm rounded overflow-hidden shadow-lg bg-stone-300">
         <div className="px-6 py-4 bg-stone-300">
-          <div className="font-bold text-xl mb-2">{title}</div>
-          <p className="text-gray-700 text-base">{authors}</p>
-          <p className="text-gray-700 text-base">{comment}</p>
+          <div className="font-bold text-3xl mb-2">{title}</div>
+          <p className="text-gray-700 text-xl font-bold">{authors}</p>
+          <p className="text-gray-700 text-base mt-4">{comment}</p>
         </div>
         <div className="px-6 pt-4 pb-2">
           <span className="inline-block bg-gray-200 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
