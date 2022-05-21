@@ -22,6 +22,9 @@ const Dashboard = () => {
       publication_year: 0,
       publication_number: 0,
       comment: "",
+      rate: 0,
+      status: 0,
+      cover: "",
     },
   ]);
   const [book, setBook] = useState(books[0]);
@@ -29,6 +32,7 @@ const Dashboard = () => {
   const [update, setUpdate] = useState(false);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [dasboardContent, setDasboardContent] = useState("library");
   const [value, setValue] = useState(new Date());
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
@@ -39,6 +43,7 @@ const Dashboard = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
+
   const fetchBooks = async () => {
     const token = localStorage.getItem("token");
     axios
@@ -54,13 +59,13 @@ const Dashboard = () => {
         console.error(error);
       });
   };
+
   useEffect(() => {
     fetchBooks();
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setValue(new Date()), 1000);
-
     return () => {
       clearInterval(interval);
     };
@@ -69,10 +74,16 @@ const Dashboard = () => {
   const handleAddBook = () => {
     setOpen(true);
   };
+
+  const options = books.map((item) => ({
+    value: item.title,
+    label: item.title,
+  }));
+
   return (
     <>
-      <header className="w-full bg-gray-600 p-4 flex justify-between items-center sticky top-0">
-       {/*} <nav className="flex items-center">
+      <header className="w-full bg-gray-600 p-4 z-10 flex justify-between sticky top-0">
+        {/*} <nav className="flex items-center">
           <div className="text-white text-xs hidden sm:block ml-2">
             <a
               href=""
@@ -102,12 +113,12 @@ const Dashboard = () => {
           </div>
         </nav>
   */}
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between items-center">
           <div className="text-white">
-          <h2 className="font-mono text-5xl text-gray-200">Twoja domowa biblioteka</h2>
+            <h2 className="font-mono text-5xl text-gray-200">BookApp</h2>
           </div>
           <div className="w-1/4">
-          <SearchInput />
+            <SearchInput options={options} />
           </div>
         </div>
       </header>
@@ -116,7 +127,7 @@ const Dashboard = () => {
         <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block">
           <div className="flex flex-col justify-between h-screen px-4 bg-gray-600">
             <div className="text-sm">
-              <button className="bg-gray-900 text-white p-2 w-full rounded cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button onClick={() => setDasboardContent("library")}className="bg-gray-900 text-white p-2 w-full rounded cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Moja biblioteka
               </button>
 
@@ -126,27 +137,25 @@ const Dashboard = () => {
               >
                 Dodaj pozycję
               </button>
-              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button onClick={() => setDasboardContent("profile")} className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
                 Mój profil
               </button>
-              <Link href="/about" passHref>
-              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
-                BookApp
-              </button>
-              </Link>
-              <button className="bg-gray-900 text-white p-2 w-full rounded mt-2" disabled>
+                <button onClick={() => setDasboardContent("about")} className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+                  O nas
+                </button>
+              <button
+                className="bg-gray-900 text-white p-2 w-full rounded mt-2"
+                disabled
+              >
                 {`Ilość książek: ${books.length}`}
               </button>
               <div className="bg-gray-900 text-white p-2 w-full h-60 rounded mt-2 cursor-pointer">
                 Planuję przeczytać:
-                <textarea className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-
-                </textarea>
-
+                <textarea className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700"></textarea>
               </div>
             </div>
             <div className="w-full flex justify-center">
-              <Clock value={value}/>
+              <Clock value={value} />
             </div>
             <div className="flex p-3 text-white bg-red-500 rounded cursor-pointer text-center text-sm">
               <button
@@ -171,13 +180,17 @@ const Dashboard = () => {
           </div>
         </aside>
 
-        <section className="w-full p-4 bg-gray-200">
+        { dasboardContent === "library" ? 
+
+        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
           <div className="w-full h-auto flex flex-wrap text-md ">
+            
             {books && books.length > 0 ? (
               books &&
               books.map((item) => {
                 return (
                   <BookCard
+                    // @ts-ignore
                     key={item.id}
                     id={item.id}
                     title={item.title}
@@ -191,6 +204,9 @@ const Dashboard = () => {
                     book={book}
                     setBook={setBook}
                     books={books}
+                    rate={item.rate}
+                    status={item.status}
+                    cover={item.cover}
                   />
                 );
               })
@@ -202,6 +218,23 @@ const Dashboard = () => {
             )}
           </div>
         </section>
+        :
+        dasboardContent === "about" ? 
+        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
+          <p>Aplikacja BookApp</p>
+          <p>Zarządzaj swoją domową biblioteką</p>
+          <p>Powstała jako projekt w ramach przedmiotu Aplikacje internetowe</p>
+          <p>PUW semestr 4 grupa 2</p>
+          <p>Autorzy</p>
+          <p>Tomasz Ciuła nr indeksu: 148791</p>
+          <p>Rafał Klepacz nr indeksu: </p>
+          <p>Lucjan Bąkowski nr indeksu: </p>
+          <p>20.05.2022 r.</p>
+        </section> 
+        :
+        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">Profil</section>
+            }
+
       </main>
       <Modal open={open} onClose={onCloseModal} center>
         <AddBook setOpen={setOpen} books={books} setBooks={setBooks} />

@@ -1,16 +1,36 @@
-import react from "react";
+import react, { useState } from "react";
+import Select from "react-select";
 
-const SearchInput = () => {
+const customStyles = {
+  menu: (provided, state) => ({
+    ...provided,
+    width: state.selectProps.width,
+    borderBottom: "1px dotted pink",
+    color: state.selectProps.menuColor,
+    padding: 20,
+  }),
+
+  control: (_, { selectProps: { width } }) => ({
+    width: width,
+  }),
+
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
+
+const SearchInput = (props) => {
+  const [text, setText] = useState(props.options[0]);
+  const onChange = (selectedOption) => {
+    setText(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+  };
   return (
-    <div className="flex w-full flex-wrap items-stretch">
-      <input
-        type="text"
-        placeholder="Szukaj ..."
-        className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10"
-      />
-      <span className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
-        <i className="fas fa-user"></i>
-      </span>
+    <div className="h-full items-center">
+      <Select options={props.options} onChange={onChange} value={text} isClearable/>
     </div>
   );
 };
