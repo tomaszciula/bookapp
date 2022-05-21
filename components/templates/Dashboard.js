@@ -25,7 +25,7 @@ const Dashboard = () => {
       comment: "",
       rate: 0,
       status: 0,
-      cover: "",
+      cover: "https://res.cloudinary.com/dwadwfrls/image/upload/v1/images/covers/photo-1549849171-09f62448709e_ht5saw",
     },
   ]);
   const [book, setBook] = useState(books[0]);
@@ -178,30 +178,30 @@ const Dashboard = () => {
               >
                 Moja biblioteka
               </button>
-
+              <button
+                className="bg-gray-900 text-white p-2 w-full rounded mt-2"
+                disabled
+              >
+                {`Ilość książek: ${books.length}`}
+              </button>
               <button
                 className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
                 onClick={handleAddBook}
               >
                 Dodaj pozycję
               </button>
+              
               <button
                 onClick={() => setDasboardContent("profile")}
                 className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
               >
-                Mój profil
+                Zmiana hasła
               </button>
               <button
                 onClick={() => setDasboardContent("about")}
                 className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
               >
                 O nas
-              </button>
-              <button
-                className="bg-gray-900 text-white p-2 w-full rounded mt-2"
-                disabled
-              >
-                {`Ilość książek: ${books.length}`}
               </button>
               <div className="bg-gray-900 text-white p-2 w-full h-60 rounded mt-2 cursor-pointer">
                 Planuję przeczytać:
@@ -242,7 +242,6 @@ const Dashboard = () => {
                 books.map((item) => {
                   return (
                     <BookCard
-                      // @ts-ignore
                       key={item.id}
                       id={item.id}
                       title={item.title}

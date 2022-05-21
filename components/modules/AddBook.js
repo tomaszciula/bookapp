@@ -8,10 +8,10 @@ import ReactStars from "react-rating-stars-component";
 import ImageUploader from "react-image-upload";
 import "react-image-upload/dist/index.css";
 
-
-
 const AddBook = ({ setOpen, books, setBooks }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [img, setImg] = useState(null);
   const [book, setBook] = useState({
     publisher_name: "",
     author_name: "",
@@ -21,12 +21,12 @@ const AddBook = ({ setOpen, books, setBooks }) => {
     comment: "",
     rate: 0,
     status: 0,
-    cover: "",
+    cover: selectedFile,
   });
   // TODO: dodawanie zdjęcia
   function getImageFileObject(imageFile) {
-    console.log("imageFile", imageFile );
-    setBook({ ...book, [book.cover]: imageFile})
+    console.log("imageFile: ", imageFile);
+    setImg({ img: imageFile.dataURL });
   }
   function runAfterImageDelete(file) {
     console.log({ onDele: file });
@@ -38,17 +38,53 @@ const AddBook = ({ setOpen, books, setBooks }) => {
     setBook((values) => ({ ...values, [name]: value }));
   };
 
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0])
+    //setBook({...book, [book.cover]: selectedFile})
+  }
+
   const handleRate = (newRating) => {
     console.log(newRating);
     setBook({ ...book, [book.rate]: newRating });
   };
 
-  const handleAddBook = (event) => {
+  const handleAddBook = () => {
     setBooks([...books, book]);
     setIsLoading(true);
     //event.preventDefault();
     const token = localStorage.getItem("token");
     console.log("dodawanie książki: ", book);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var formdata = new FormData();
+    formdata.append("cover", selectedFile);
+    formdata.append("publisher_name", "publisher_name");
+    formdata.append("author_name", "author_name");
+    formdata.append("title", "title");
+    formdata.append("publication_year", "2010");
+    formdata.append("publication_number", "2");
+    formdata.append("comment", "comment comment comment");
+    formdata.append("rate", "4");
+    formdata.append("status", "0");
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      //redirect: 'follow'
+    };
+
+    fetch(
+      "https://evening-tundra-43669.herokuapp.com/api/books/",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+{/*
     axios
       .post(`${API}/api/books/`, book, {
         headers: {
@@ -62,6 +98,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
       .catch((error) => {
         console.error(error);
       });
+    */}
     //setBooks({...books, book});
     setOpen(false);
     //Router.reload();
@@ -75,7 +112,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
   if (isLoading === false) {
     return (
       <div>
-        <form>
+        <form id="myForm" name="myForm">
           <div className="mb-3 pt-0 justify-end">
             <h3>Dodaj nową pozycję</h3>
             <input
@@ -127,7 +164,13 @@ const AddBook = ({ setOpen, books, setBooks }) => {
             />
             {/* TODO: adding to add new book */}
             <div className="flex justify-between items-center">
-              <select className="focus:outline-none" defaultValue={book.status || 0} onChange={(e) => setBook({...book, [book.status]: e.target.value})}>
+              <select
+                className="focus:outline-none"
+                defaultValue={book.status || 0}
+                onChange={(e) =>
+                  setBook({ ...book, [book.status]: e.target.value })
+                }
+              >
                 <option value="">Status pozycji</option>
                 <option value="0">Do przeczytania</option>
                 <option value="1">Czytam ...</option>
@@ -144,11 +187,15 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               </div>
               <div>
                 <h4>Dodaj okładkę</h4>
+                {/* 
                 <ImageUploader
-                //onFileAdded={(img) => setBook({...book, [book.cover]: img})}
+                  // onFileAdded={(img) => setBook({...book, [book.cover]: img})}
                   onFileAdded={(img) => getImageFileObject(img)} // function that runs to confirm that your image actually exists
                   onFileRemoved={(img) => runAfterImageDelete(img)} // function runs on once you delete your image
                 />
+                */}
+                <input type="file" onChange={handleFileSelect} />
+                <input type="submit" value="Upload File" />
               </div>
             </div>
           </div>

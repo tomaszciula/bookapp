@@ -69,13 +69,13 @@ const BookCard = ({
     setUpdate(true);
   };
   return (
-    <div className="p-10" id={id}>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg bg-stone-300">
+    <div className="p-5 max-w-xl" id={id}>
+      <div className="w-full rounded overflow-hidden shadow-lg bg-stone-300">
         <div className="px-6 py-4 bg-stone-300">
           <div className="font-bold text-3xl mb-2">{title}</div>
           {/*TODO: Image book cover */}
           <div>
-            <Image src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80" alt={cover} width={100} height={200} />
+            <Image src={cover} alt={cover} width={200} height={200} />
           </div>
           <p className="text-gray-700 text-xl font-bold">{authors}</p>
           <p className="text-gray-700 text-base mt-4">{comment}</p>
