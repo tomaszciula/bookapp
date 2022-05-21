@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import axios from "axios";
 import { useRouter } from "next/router";
 import react, { useEffect, useState } from "react";
@@ -127,7 +128,10 @@ const Dashboard = () => {
         <aside className="w-80 h-screen bg-gray shadow-md w-fulll hidden sm:block">
           <div className="flex flex-col justify-between h-screen px-4 bg-gray-600">
             <div className="text-sm">
-              <button onClick={() => setDasboardContent("library")}className="bg-gray-900 text-white p-2 w-full rounded cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button
+                onClick={() => setDasboardContent("library")}
+                className="bg-gray-900 text-white p-2 w-full rounded cursor-pointer hover:bg-gray-700 hover:text-blue-300"
+              >
                 Moja biblioteka
               </button>
 
@@ -137,12 +141,18 @@ const Dashboard = () => {
               >
                 Dodaj pozycję
               </button>
-              <button onClick={() => setDasboardContent("profile")} className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
+              <button
+                onClick={() => setDasboardContent("profile")}
+                className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
+              >
                 Mój profil
               </button>
-                <button onClick={() => setDasboardContent("about")} className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300">
-                  O nas
-                </button>
+              <button
+                onClick={() => setDasboardContent("about")}
+                className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
+              >
+                O nas
+              </button>
               <button
                 className="bg-gray-900 text-white p-2 w-full rounded mt-2"
                 disabled
@@ -180,65 +190,66 @@ const Dashboard = () => {
           </div>
         </aside>
 
-        { dasboardContent === "library" ? 
-
-        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
-          <div className="w-full h-auto flex flex-wrap text-md ">
-            
-            {books && books.length > 0 ? (
-              books &&
-              books.map((item) => {
-                return (
-                  <BookCard
-                    // @ts-ignore
-                    key={item.id}
-                    id={item.id}
-                    title={item.title}
-                    authors={item.author_name}
-                    publisher={item.publisher_name}
-                    publish_year={item.publication_year}
-                    publish_number={item.publication_number}
-                    comment={item.comment}
-                    setBooks={setBooks}
-                    setUpdate={setUpdate}
-                    book={book}
-                    setBook={setBook}
-                    books={books}
-                    rate={item.rate}
-                    status={item.status}
-                    cover={item.cover}
-                  />
-                );
-              })
-            ) : (
-              <p>
-                Nie masz jeszcze żadnych książek, dodaj pozycję klikając w Dodaj
-                pozycję
-              </p>
-            )}
-          </div>
-        </section>
-        :
-        dasboardContent === "about" ? 
-        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
-          <div className="w-1/4 text-center">
-          <p className="text-3xl font-bold mb-10">Aplikacja BookApp</p>
-          <p className="font-medium mb-3">Zarządzaj swoją domową biblioteką</p>
-          <p className="mb-3">Powstała jako projekt w ramach przedmiotu "Aplikacje internetowe"</p>
-          <p className="mb-3">PUW semestr 4 grupa 2</p>
-          <p className="font-bold mb-2">Autorzy</p>
-          <p className="font-medium">Tomasz Ciuła nr indeksu: 148791</p>
-          <p className="font-medium">Rafał Klepacz nr indeksu: </p>
-          <p className="mb-3 font-medium">Lucjan Bąkowski nr indeksu: </p>
-          <p className="text-sm">20.05.2022 r.</p>
-          </div>
-        </section> 
-        :
-        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">
-          Profil
+        {dasboardContent === "library" ? (
+          <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
+            <div className="w-full h-auto flex flex-wrap text-md ">
+              {books && books.length > 0 ? (
+                books &&
+                books.map((item) => {
+                  return (
+                    <BookCard
+                      // @ts-ignore
+                      key={item.id}
+                      id={item.id}
+                      title={item.title}
+                      authors={item.author_name}
+                      publisher={item.publisher_name}
+                      publish_year={item.publication_year}
+                      publish_number={item.publication_number}
+                      comment={item.comment}
+                      setBooks={setBooks}
+                      setUpdate={setUpdate}
+                      book={book}
+                      setBook={setBook}
+                      books={books}
+                      rate={item.rate}
+                      status={item.status}
+                      cover={item.cover}
+                    />
+                  );
+                })
+              ) : (
+                <p>
+                  Nie masz jeszcze żadnych książek, dodaj pozycję klikając w
+                  Dodaj pozycję
+                </p>
+              )}
+            </div>
           </section>
-            }
-
+        ) : dasboardContent === "about" ? (
+          <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
+            <div className="w-1/4 text-center">
+              <p className="text-3xl font-bold mb-10">Aplikacja BookApp</p>
+              <p className="font-medium mb-3">
+                Zarządzaj swoją domową biblioteką
+              </p>
+              <p className="mb-3">
+                Powstała jako projekt w ramach przedmiotu "Aplikacje
+                internetowe"
+              </p>
+              <p className="mb-3">PUW semestr 4 grupa 2</p>
+              <p className="font-bold mb-2">Autorzy</p>
+              <p className="font-medium">Tomasz Ciuła nr indeksu: 148791</p>
+              <p className="font-medium">Rafał Klepacz nr indeksu: </p>
+              <p className="mb-3 font-medium">Lucjan Bąkowski nr indeksu: </p>
+              <p className="text-sm">20.05.2022 r.</p>
+            </div>
+          </section>
+        ) : (
+          <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">
+            Profil
+          </section>
+        )}
       </main>
       <Modal open={open} onClose={onCloseModal} center>
         <AddBook setOpen={setOpen} books={books} setBooks={setBooks} />
