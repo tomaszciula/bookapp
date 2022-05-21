@@ -221,18 +221,22 @@ const Dashboard = () => {
         :
         dasboardContent === "about" ? 
         <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
-          <p>Aplikacja BookApp</p>
-          <p>Zarządzaj swoją domową biblioteką</p>
-          <p>Powstała jako projekt w ramach przedmiotu Aplikacje internetowe</p>
-          <p>PUW semestr 4 grupa 2</p>
-          <p>Autorzy</p>
-          <p>Tomasz Ciuła nr indeksu: 148791</p>
-          <p>Rafał Klepacz nr indeksu: </p>
-          <p>Lucjan Bąkowski nr indeksu: </p>
-          <p>20.05.2022 r.</p>
+          <div className="w-1/4 text-center">
+          <p className="text-3xl font-bold mb-10">Aplikacja BookApp</p>
+          <p className="font-medium mb-3">Zarządzaj swoją domową biblioteką</p>
+          <p className="mb-3">Powstała jako projekt w ramach przedmiotu "Aplikacje internetowe"</p>
+          <p className="mb-3">PUW semestr 4 grupa 2</p>
+          <p className="font-bold mb-2">Autorzy</p>
+          <p className="font-medium">Tomasz Ciuła nr indeksu: 148791</p>
+          <p className="font-medium">Rafał Klepacz nr indeksu: </p>
+          <p className="mb-3 font-medium">Lucjan Bąkowski nr indeksu: </p>
+          <p className="text-sm">20.05.2022 r.</p>
+          </div>
         </section> 
         :
-        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">Profil</section>
+        <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">
+          Profil
+          </section>
             }
 
       </main>

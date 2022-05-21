@@ -12,7 +12,7 @@ export default function Landing() {
     <>
       <Navbar transparent />
       <main>
-        <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+        <div className="bg-gray-500 relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
             style={{
@@ -118,7 +118,7 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center mt-32">
+            <div className="flex flex-wrap items-center mt-3">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
                 <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
                   <i className="fas fa-user-friends text-xl"></i>
@@ -126,7 +126,7 @@ export default function Landing() {
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
                   Czytanie książek redukuje stres
                 </h3>
-                <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600 text-justify">
+                <p className="text-lg font-light leading-relaxed mb-4 text-blueGray-600 text-justify">
                   Czytanie uspokaja i spowalnia bicie serca. Wystarczy 6 minut
                   czytania, żeby zredukować uczucie stresu aż o 60%! Co ciekawe,
                   czytanie książek redukuje stres: o 68% bardziej od słuchania
