@@ -34,15 +34,59 @@ const Dashboard = () => {
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [dasboardContent, setDasboardContent] = useState("library");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [changePassword, setChangePassword] = useState(false);
   const [value, setValue] = useState(new Date());
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => {
-    open ? setOpen(false) : setUpdate(false);
+    open
+      ? setOpen(false)
+      : update
+      ? setUpdate(false)
+      : setChangePassword(false);
   };
+
   const handleClick = (event) => {
     localStorage.removeItem("token");
     router.push("/");
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    e.target.name === "old" ? setOldPassword(e.target.value) : null;
+    e.target.name === "new" ? setNewPassword(e.target.value) : null;
+    e.target.name === "repeat" ? setRepeatPassword(e.target.value) : null;
+
+    console.log(oldPassword);
+    console.log(newPassword);
+    console.log(repeatPassword);
+  };
+
+  const handleChangePassword = () => {
+    const token = localStorage.getItem("token");
+    let password = {
+      old_password: `${oldPassword}`,
+      new_password: `${newPassword}`,
+    };
+    setIsLoading(true);
+    axios
+      .put(`${API}/api/users/`, password, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setChangePassword(true);
+        console.log("user: ", response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
   };
 
   const fetchBooks = async () => {
@@ -247,7 +291,42 @@ const Dashboard = () => {
           </section>
         ) : (
           <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex justify-center items-center">
-            Profil
+            <form>
+              <div className="pt-0 w-80 flex flex-col justify-items-end">
+                <h3>Zmiana hasła</h3>
+                <input
+                  type="password"
+                  name="old"
+                  placeholder="Stare hasło"
+                  className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+                  value={oldPassword}
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  name="new"
+                  placeholder="Nowe hasło"
+                  className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+                  value={newPassword}
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  name="repeat"
+                  placeholder="Powtórz nowe hasło"
+                  className="my-4 px-2 py-1 placeholder-gray-400 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+                  value={repeatPassword}
+                  onChange={handleChange}
+                />
+                <button
+                  className="bg-gray-500 text-white active:bg-gray-600 mt-10 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-gray-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={handleChangePassword}
+                >
+                  Zmień hasło
+                </button>
+              </div>
+            </form>
           </section>
         )}
       </main>
@@ -256,6 +335,9 @@ const Dashboard = () => {
       </Modal>
       <Modal open={update} onClose={onCloseModal} center>
         <EditBook setUpdate={setUpdate} book={book} />
+      </Modal>
+      <Modal open={changePassword} onClose={onCloseModal} center>
+        <div>Hasło zostało zmienione</div>
       </Modal>
     </>
   );
