@@ -2,10 +2,10 @@ import React from "react";
 
 const LoadingSpinner = () => {
   return (
-    <div className="flex justify-center items-center space-x-1 text-sm text-white">
+    <div className="flex justify-center align-center items-center space-x-1 text-5xl text-black">
       <svg
         fill="none"
-        className="w-6 h-6 animate-spin"
+        className="w-16 h-16 animate-spin"
         viewBox="0 0 32 32"
         xmlns="http://www.w3.org/2000/svg"
       >

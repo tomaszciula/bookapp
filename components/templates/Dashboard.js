@@ -12,6 +12,7 @@ import EditBook from "../modules/EditBook";
 import MyClock from "../elements/Clock";
 import Clock from "react-clock";
 import Link from "next/link";
+import LoadingSpinner from "../elements/LoadingSpinner";
 
 const Dashboard = () => {
   const [books, setBooks] = useState([
@@ -103,6 +104,7 @@ const Dashboard = () => {
       .then((response) => {
         console.log("get books: ", response.data);
         setBooks(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -129,9 +131,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchPlanToRead();
-  }, {});
+  }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     fetchBooks();
   }, []);
 
@@ -300,40 +303,46 @@ const Dashboard = () => {
         </aside>
 
         {dasboardContent === "library" ? (
-          <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
+          isLoading ? (
             <div className="w-full h-auto flex flex-wrap text-md justify-around">
-              {books && books.length > 0 ? (
-                books &&
-                books.map((item) => {
-                  return (
-                    <BookCard
-                      key={item.id}
-                      id={item.id}
-                      title={item.title}
-                      authors={item.author_name}
-                      publisher={item.publisher_name}
-                      publish_year={item.publication_year}
-                      publish_number={item.publication_number}
-                      comment={item.comment}
-                      setBooks={setBooks}
-                      setUpdate={setUpdate}
-                      book={book}
-                      setBook={setBook}
-                      books={books}
-                      rate={item.rate}
-                      status={item.status}
-                      cover={item.cover}
-                    />
-                  );
-                })
-              ) : (
-                <p>
-                  Nie masz jeszcze żadnych książek, dodaj pozycję klikając w
-                  Dodaj pozycję
-                </p>
-              )}
+              <LoadingSpinner />
             </div>
-          </section>
+          ) : (
+            <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
+              <div className="w-full h-auto flex flex-wrap text-md justify-around">
+                {books && books.length > 0 ? (
+                  books &&
+                  books.map((item) => {
+                    return (
+                      <BookCard
+                        key={item.id}
+                        id={item.id}
+                        title={item.title}
+                        authors={item.author_name}
+                        publisher={item.publisher_name}
+                        publish_year={item.publication_year}
+                        publish_number={item.publication_number}
+                        comment={item.comment}
+                        setBooks={setBooks}
+                        setUpdate={setUpdate}
+                        book={book}
+                        setBook={setBook}
+                        books={books}
+                        rate={item.rate}
+                        status={item.status}
+                        cover={item.cover}
+                      />
+                    );
+                  })
+                ) : (
+                  <p>
+                    Nie masz jeszcze żadnych książek, dodaj pozycję klikając w
+                    Dodaj pozycję
+                  </p>
+                )}
+              </div>
+            </section>
+          )
         ) : dasboardContent === "about" ? (
           <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
             <div className="w-1/4 text-center">
