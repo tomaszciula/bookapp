@@ -9,7 +9,7 @@ import ReactStars from "react-rating-stars-component";
 
 const bookRate = {
   size: 25,
-  edit: false,
+  edit: true,
 };
 
 const BookCard = ({
@@ -30,6 +30,41 @@ const BookCard = ({
   setBook,
 }) => {
   const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+
+  const ratingChange = (newRating) => {
+    setRating(newRating);
+    console.log("new rating: ", newRating);
+    const token = localStorage.getItem("token");
+    console.log("state: ");
+    axios
+      .put(
+        `${API}/api/books/${id}`,
+        {
+          publisher_name: publisher,
+          author_name: authors,
+          title: title,
+          publication_year: publish_year,
+          publication_number: publish_number,
+          comment: comment,
+          rate: newRating,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setUpdate(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const handleDelete = (event) => {
     console.log("books: ", books);
     console.log(event.target.id);
@@ -56,6 +91,7 @@ const BookCard = ({
 
   const handleUpdate = () => {
     setBook({
+      id: id,
       publisher_name: publisher,
       author_name: authors,
       title: title,
@@ -69,13 +105,13 @@ const BookCard = ({
     setUpdate(true);
   };
   return (
-    <div className="p-5 max-w-xl" id={id}>
+    <div className="p-5 max-w-lg" id={id}>
       <div className="w-full rounded overflow-hidden shadow-lg bg-stone-300">
         <div className="px-6 py-4 bg-stone-300">
           <div className="font-bold text-3xl mb-2">{title}</div>
           {/*TODO: Image book cover */}
           <div>
-            <Image src={cover} alt={cover} width={200} height={200} />
+            <img src={cover} alt={cover} width={150} height={200} />
           </div>
           <p className="text-gray-700 text-xl font-bold">{authors}</p>
           <p className="text-gray-700 text-base mt-4">{comment}</p>
@@ -98,6 +134,7 @@ const BookCard = ({
           ) : (
             ""
           )}
+          {/*
           <div className="flex flex-col">
             <div className="w-full flex-row justify-between">
               <input
@@ -105,22 +142,39 @@ const BookCard = ({
                 id="toRead"
                 name="toRead"
                 value="Do przeczytania"
+                onChange={handleReadingChange}
+                checked={status === 0}
               />
               <label htmlFor="toRead">Do przeczytania</label>
             </div>
             <div className="justify-between">
-              <input type="radio" id="reading" name="reading" value="Czytam" />
+              <input
+                type="radio"
+                id="reading"
+                name="reading"
+                value="Czytam"
+                onChange={handleReadingChange}
+                checked={status === 1}
+              />
               <label htmlFor="reading">W trakcie czytania</label>
             </div>
             <div className="justify-between">
-              <input type="radio" id="read" name="read" value="Przeczytana" />
+              <input
+                type="radio"
+                id="read"
+                name="read"
+                value="Przeczytana"
+                onChange={handleReadingChange}
+                checked={status === 2}
+              />
               <label htmlFor="read">Przeczytana</label>
             </div>
-          </div>
+          </div>          */}
         </div>
+
         {/*TODO: rating */}
-        <div className="flex justify-center">
-          <ReactStars {...bookRate} value={rate} />
+        <div className="flex justify-end p-2">
+          <ReactStars {...bookRate} value={rate} onChange={ratingChange} />
         </div>
         <div className="w-full flex justify-end p-2 ">
           <button

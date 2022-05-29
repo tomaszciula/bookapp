@@ -25,7 +25,8 @@ const Dashboard = () => {
       comment: "",
       rate: 0,
       status: 0,
-      cover: "https://res.cloudinary.com/dwadwfrls/image/upload/v1/images/covers/photo-1549849171-09f62448709e_ht5saw",
+      cover:
+        "https://res.cloudinary.com/dwadwfrls/image/upload/v1/images/covers/photo-1549849171-09f62448709e_ht5saw",
     },
   ]);
   const [book, setBook] = useState(books[0]);
@@ -98,6 +99,7 @@ const Dashboard = () => {
         },
       })
       .then((response) => {
+        console.log("get books: ", response.data);
         setBooks(response.data);
       })
       .catch((error) => {
@@ -118,6 +120,21 @@ const Dashboard = () => {
 
   const handleAddBook = () => {
     setOpen(true);
+  };
+
+  const PlanToRead = async (e) => {
+    const token = localStorage.getItem("token");
+    axios.patch(`${API}/api/users/`, e.target.value, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((response) => {
+      console.log("plan to read: ", response.data);
+      const textarea = document.getElementById("PlanToRead")
+      textarea.innerHTML = response.data;
+    })
+    .catch((error) => {
+      console.error(error)
+    })
   };
 
   const options = books.map((item) => ({
@@ -190,7 +207,7 @@ const Dashboard = () => {
               >
                 Dodaj pozycję
               </button>
-              
+
               <button
                 onClick={() => setDasboardContent("profile")}
                 className="bg-gray-900 text-white p-2 w-full rounded mt-2 cursor-pointer hover:bg-gray-700 hover:text-blue-300"
@@ -205,7 +222,11 @@ const Dashboard = () => {
               </button>
               <div className="bg-gray-900 text-white p-2 w-full h-60 rounded mt-2 cursor-pointer">
                 Planuję przeczytać:
-                <textarea className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700"></textarea>
+                <textarea
+                  id="PlanToRead"
+                  className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                  onBlur={PlanToRead}
+                ></textarea>
               </div>
             </div>
             <div className="w-full flex justify-center">
@@ -236,7 +257,7 @@ const Dashboard = () => {
 
         {dasboardContent === "library" ? (
           <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200">
-            <div className="w-full h-auto flex flex-wrap text-md ">
+            <div className="w-full h-auto flex flex-wrap text-md justify-around">
               {books && books.length > 0 ? (
                 books &&
                 books.map((item) => {

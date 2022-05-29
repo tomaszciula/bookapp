@@ -39,9 +39,9 @@ const AddBook = ({ setOpen, books, setBooks }) => {
   };
 
   const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0])
+    setSelectedFile(event.target.files[0]);
     //setBook({...book, [book.cover]: selectedFile})
-  }
+  };
 
   const handleRate = (newRating) => {
     console.log(newRating);
@@ -60,14 +60,14 @@ const AddBook = ({ setOpen, books, setBooks }) => {
 
     var formdata = new FormData();
     formdata.append("cover", selectedFile);
-    formdata.append("publisher_name", "publisher_name");
-    formdata.append("author_name", "author_name");
-    formdata.append("title", "title");
-    formdata.append("publication_year", "2010");
-    formdata.append("publication_number", "2");
-    formdata.append("comment", "comment comment comment");
-    formdata.append("rate", "4");
-    formdata.append("status", "0");
+    formdata.append("publisher_name", book.publisher_name);
+    formdata.append("author_name", book.author_name);
+    formdata.append("title", book.title);
+    formdata.append("publication_year", `${book.publication_year}`);
+    formdata.append("publication_number", `${book.publication_number}`);
+    formdata.append("comment", book.comment);
+    formdata.append("rate", `${book.rate}`);
+    formdata.append("status", `${book.status}`);
 
     var requestOptions = {
       method: "POST",
@@ -84,7 +84,8 @@ const AddBook = ({ setOpen, books, setBooks }) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
 
-{/*
+    {
+      /*
     axios
       .post(`${API}/api/books/`, book, {
         headers: {
@@ -98,7 +99,8 @@ const AddBook = ({ setOpen, books, setBooks }) => {
       .catch((error) => {
         console.error(error);
       });
-    */}
+    */
+    }
     //setBooks({...books, book});
     setOpen(false);
     //Router.reload();
@@ -163,7 +165,9 @@ const AddBook = ({ setOpen, books, setBooks }) => {
               onChange={handleChange}
             />
             {/* TODO: adding to add new book */}
+
             <div className="flex justify-between items-center">
+              {/*
               <select
                 className="focus:outline-none"
                 defaultValue={book.status || 0}
@@ -176,6 +180,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
                 <option value="1">Czytam ...</option>
                 <option value="2">Przeczytana</option>
               </select>
+              */}
               <div className="flex items-center">
                 <p className="mr-2">Twoja ocena</p>
                 <ReactStars
@@ -185,8 +190,8 @@ const AddBook = ({ setOpen, books, setBooks }) => {
                   value={book.rate || 0}
                 />
               </div>
-              <div>
-                <h4>Dodaj okładkę</h4>
+              <div className="flex items-center">
+                <h4 className="mx-2">Dodaj okładkę</h4>
                 {/* 
                 <ImageUploader
                   // onFileAdded={(img) => setBook({...book, [book.cover]: img})}
@@ -195,7 +200,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
                 />
                 */}
                 <input type="file" onChange={handleFileSelect} />
-                <input type="submit" value="Upload File" />
+                {/*<input type="submit" value="Upload File" />*/}
               </div>
             </div>
           </div>
