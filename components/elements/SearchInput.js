@@ -23,14 +23,10 @@ const customStyles = {
 };
 
 const SearchInput = (props) => {
-  const [text, setText] = useState(props.options[0]);
-  const onChange = (selectedOption) => {
-    setText(selectedOption);
-    console.log(`Option selected:`, selectedOption);
-  };
+
   return (
     <div className="h-full items-center">
-      <Select options={props.options} onChange={onChange} value={text} isClearable/>
+      <Select options={props.options} onChange={props.onChange} value={props.text} id="search"/>
     </div>
   );
 };

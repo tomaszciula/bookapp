@@ -87,7 +87,7 @@ const EditBook = ({ setUpdate, book }) => {
           <textarea
             name="comment"
             placeholder="Twój komentarz ..."
-            className="my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
+            className="h-40 my-4 px-2 py-1 placeholder-gray-300 text-gray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full"
             value={state.comment}
             onChange={handleChange}
           />

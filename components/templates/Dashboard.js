@@ -39,6 +39,8 @@ const Dashboard = () => {
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [changePassword, setChangePassword] = useState(false);
+  const [text, setText] = useState();
+  const [index, setIndex] = useState(0);
   const [value, setValue] = useState(new Date());
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
@@ -107,6 +109,28 @@ const Dashboard = () => {
       });
   };
 
+  const fetchPlanToRead = async () => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${API}/api/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("to read: ", response.data);
+        const toRead = document.getElementById("PlanToRead");
+        toRead.innerText = response.data.profile.plan_to_read;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchPlanToRead();
+  }, {});
+
   useEffect(() => {
     fetchBooks();
   }, []);
@@ -123,21 +147,37 @@ const Dashboard = () => {
   };
 
   const PlanToRead = async (e) => {
+    console.log(e.target.value);
     const token = localStorage.getItem("token");
-    axios.patch(`${API}/api/users/`, e.target.value, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((response) => {
-      console.log("plan to read: ", response.data);
-      const textarea = document.getElementById("PlanToRead")
-      textarea.innerHTML = response.data;
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+    axios
+      .patch(
+        `${API}/api/users/`,
+        {
+          plan_to_read: `${e.target.value}`,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((response) => {
+        console.log("plan to read: ", response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const options = books.map((item) => ({
+  const onSearchChange = (selectedOption) => {
+    setText(selectedOption);
+    console.log(`Option selected:`, selectedOption.value);
+    const titleToFind = selectedOption.value;
+    const index = books.findIndex((el) => el.title === titleToFind);
+    console.log(books[index].id);
+    setIndex(index);
+    setDasboardContent("searchedBook");
+  };
+
+  const options = books?.map((item) => ({
     value: item.title,
     label: item.title,
   }));
@@ -180,7 +220,11 @@ const Dashboard = () => {
             <h2 className="font-mono text-5xl text-gray-200">BookApp</h2>
           </div>
           <div className="w-1/4">
-            <SearchInput options={options} />
+            <SearchInput
+              options={options}
+              value={text}
+              onChange={onSearchChange}
+            />
           </div>
         </div>
       </header>
@@ -221,10 +265,10 @@ const Dashboard = () => {
                 O nas
               </button>
               <div className="bg-gray-900 text-white p-2 w-full h-60 rounded mt-2 cursor-pointer">
-                Planuję przeczytać:
+                Notatnik
                 <textarea
                   id="PlanToRead"
-                  className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                  className="bg-gray-900 text-white w-full h-40 rounded mt-4 cursor-pointer hover:bg-gray-700 focus:outline-none focus:bg-gray-700 whitespace-pre-line"
                   onBlur={PlanToRead}
                 ></textarea>
               </div>
@@ -307,6 +351,28 @@ const Dashboard = () => {
               <p className="font-medium">Rafał Klepacz nr indeksu: </p>
               <p className="mb-3 font-medium">Lucjan Bąkowski nr indeksu: </p>
               <p className="text-sm">20.05.2022 r.</p>
+            </div>
+          </section>
+        ) : dasboardContent === "searchedBook" ? (
+          <section className="w-full max-h-full overflow-y-scroll z-0 p-4 bg-gray-200 flex flex-col justify-center items-center">
+            <div className="mt-20">
+              <BookCard
+                id={books[index].id}
+                title={books[index].title}
+                authors={books[index].author_name}
+                publisher={books[index].publisher_name}
+                publish_year={books[index].publication_year}
+                publish_number={books[index].publication_number}
+                comment={books[index].comment}
+                rate={books[index].rate}
+                status={books[index].status}
+                cover={books[index].cover}
+                books={books}
+                setBooks={setBooks}
+                setUpdate={setUpdate}
+                book={book}
+                setBook={setBook}
+              />
             </div>
           </section>
         ) : (
