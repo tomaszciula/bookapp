@@ -120,9 +120,9 @@ export default function Landing() {
 
             <div className="flex flex-wrap items-center mt-3">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
+                {/* <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
                   <i className="fas fa-user-friends text-xl"></i>
-                </div>
+                </div>*/}
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
                   Czytanie książek redukuje stres
                 </h3>
@@ -148,6 +148,7 @@ export default function Landing() {
                     src="https://images.unsplash.com/photo-1639486649969-61296ce0a5ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=773&q=80"
                     className="w-full align-middle rounded-t-lg"
                   />
+                  {/*
                   <blockquote className="relative p-8 mb-4">
                     <svg
                       preserveAspectRatio="none"
@@ -169,13 +170,14 @@ export default function Landing() {
                       continue whatever happens.
                     </p>
                   </blockquote>
+              */}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="relative py-20">
+        <section className="relative py-2">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
             style={{ transform: "translateZ(0)" }}
@@ -207,9 +209,9 @@ export default function Landing() {
               </div>
               <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
                 <div className="md:pr-12">
-                  <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-blueGray-200">
+                  {/* <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-blueGray-200">
                     <i className="fas fa-rocket text-xl"></i>
-                  </div>
+            </div>*/}
                   <h3 className="text-3xl font-semibold">
                     Czytanie poprawia pamięć i rozwija wyobraźnię
                   </h3>
@@ -274,7 +276,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="pt-20 pb-48">
+        <section className="pt-2 pb-4">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center text-center mb-24">
               <div className="w-full lg:w-6/12 px-4">
@@ -288,26 +290,26 @@ export default function Landing() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap text-center">
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
+                  <Image
+                    width={168}
+                    height={112}
                     alt="..."
                     src="https://images.unsplash.com/photo-1505489304219-85ce17010209?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">Odpoczynek</h5>
-
-                    <div className="mt-6">
-
-                    </div>
                   </div>
                 </div>
               </div>
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
+                  <Image
+                    width={168}
+                    height={112}
                     alt="..."
                     src="https://images.unsplash.com/photo-1491309055486-24ae511c15c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
@@ -315,41 +317,42 @@ export default function Landing() {
                   <div className="pt-6 text-center">
                     <h5 className="text-xl font-bold">Koncentracja</h5>
 
-                    <div className="mt-6">
-
-                    </div>
+                    <div className="mt-6"></div>
                   </div>
                 </div>
               </div>
               <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                 <div className="px-6">
-                  <img
-                    alt="..."
-                    src="https://images.unsplash.com/photo-1460518451285-97b6aa326961?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-                    className="shadow-lg rounded-full mx-auto max-w-120-px"
-                  />
-                  <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Komunikacja</h5>
-
-                    <div className="mt-6">
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                <div className="px-8">
-                  <img
+                  <Image
+                    width={168}
+                    height={112}
                     alt="..."
                     src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
-                    <h5 className="text-xl font-bold">Inteligencja emocjonalna</h5>
+                    <h5 className="text-xl font-bold">
+                      Inteligencja emocjonalna
+                    </h5>
 
-                    <div className="mt-6">
+                    <div className="mt-6"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
+                <div className="px-6">
+                  <Image
+                    width={168}
+                    height={112}
+                    alt="..."
+                    src="https://images.unsplash.com/photo-1460518451285-97b6aa326961?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                    className="shadow-lg rounded-full mx-auto max-w-120-px"
+                  />
 
-                    </div>
+                  <div className="pt-6 text-center">
+                    <h5 className="text-xl font-bold">Komunikacja</h5>
+
+                    <div className="mt-6"></div>
                   </div>
                 </div>
               </div>
@@ -398,7 +401,8 @@ export default function Landing() {
                   Excelent Services
                 </h6>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  Kataloguj swój księgozbiór, łatwo nim zarządzaj, dodawaj i usuwaj pozycje
+                  Kataloguj swój księgozbiór, łatwo nim zarządzaj, dodawaj i
+                  usuwaj pozycje
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -436,7 +440,8 @@ export default function Landing() {
                       Masz pytania odnośnie BookApp?
                     </h4>
                     <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
-                      Wyślij pytanie, postaramy się odpowiedzieć najszybciej jak to będzie możliwe
+                      Wyślij pytanie, postaramy się odpowiedzieć najszybciej jak
+                      to będzie możliwe
                     </p>
                     <div className="relative w-full mb-3 mt-8">
                       <label

@@ -41,15 +41,15 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/presentation?ref=nnjs-footer"
+                        href="https://www.storytel.com/pl/pl/"
                       >
-                        O nas
+                        Storytel
                       </a>
                     </li>
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://blog.creative-tim.com?ref=nnjs-footer"
+                        href="https://www.empik.com"
                       >
                         Empik
                       </a>
@@ -57,7 +57,7 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.github.com/creativetimofficial?ref=nnjs-footer"
+                        href="https://www.legimi.pl"
                       >
                         Legimi
                       </a>
@@ -65,9 +65,9 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/bootstrap-themes/free?ref=nnjs-footer"
+                        href="https://audioteka.com/pl/"
                       >
-                        Audiobooki
+                        Audioteka
                       </a>
                     </li>
                   </ul>
@@ -80,9 +80,9 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md?ref=nnjs-footer"
+                        href="https://github.com/tomaszciula/bookapp"
                       >
-                        GitHub
+                        GitHub - frontend, UI
                       </a>
                     </li>
                     <li>
@@ -90,13 +90,13 @@ export default function Footer() {
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/terms?ref=nnjs-footer"
                       >
-                        Warunki korzystania z aplikacji
+                        GitHub - backend, RestAPI
                       </a>
                     </li>
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/privacy?ref=nnjs-footer"
+                        href="https://cyberfolks.pl/generator-polityki-prywatnosci/?gclid=Cj0KCQjwnNyUBhCZARIsAI9AYlFyuH6PrbZcAk2jsIgTnXEUHmIONNwkdTl-OSRK1ZQJgPj8gJQhKhgaAnvKEALw_wcB"
                       >
                         Polityka prywatności
                       </a>
@@ -104,7 +104,7 @@ export default function Footer() {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/contact-us?ref=nnjs-footer"
+                        href="mailto:cetex.tc@gmail.com?subject=Napisz do nas"
                       >
                         Kontakt do nas
                       </a>
