@@ -113,7 +113,13 @@ const BookCard = ({
           <div className="font-bold text-3xl mb-2">{title}</div>
           {/*TODO: Image book cover */}
           <div>
-            <img src={cover ? cover : URL.createObjectURL(selectedFile)} alt={cover} width={150} height={200} />
+            {/* @ts-ignore */}
+            <Image
+              src={cover ? cover : URL.createObjectURL(selectedFile)}
+              alt={cover}
+              width={150}
+              height={200}
+            />
           </div>
           <p className="text-gray-700 text-xl font-bold">{authors}</p>
           <p className="text-gray-700 text-base mt-4">{comment}</p>
