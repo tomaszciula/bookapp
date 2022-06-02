@@ -5,8 +5,6 @@ import { API } from "../../constants/path";
 import LoadingSpinner from "../elements/LoadingSpinner";
 import getBooks from "../../api/getBooks";
 import ReactStars from "react-rating-stars-component";
-import ImageUploader from "react-image-upload";
-import "react-image-upload/dist/index.css";
 
 const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) => {
   const [isLoading, setIsLoading] = useState(false);
