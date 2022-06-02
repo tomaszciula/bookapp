@@ -8,9 +8,8 @@ import ReactStars from "react-rating-stars-component";
 import ImageUploader from "react-image-upload";
 import "react-image-upload/dist/index.css";
 
-const AddBook = ({ setOpen, books, setBooks }) => {
+const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [img, setImg] = useState(null);
   const [book, setBook] = useState({
     publisher_name: "",
@@ -21,9 +20,10 @@ const AddBook = ({ setOpen, books, setBooks }) => {
     comment: "",
     rate: 0,
     status: 0,
-    cover: selectedFile,
+    cover: null,
   });
   // TODO: dodawanie zdjęcia
+  {/*
   function getImageFileObject(imageFile) {
     console.log("imageFile: ", imageFile);
     setImg({ img: imageFile.dataURL });
@@ -31,6 +31,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
   function runAfterImageDelete(file) {
     console.log({ onDele: file });
   }
+*/}
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -40,7 +41,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
-    //setBook({...book, [book.cover]: selectedFile})
+    // setBook({ ...book, [book.cover]: selectedFile });
   };
 
   const handleRate = (newRating) => {
@@ -105,6 +106,7 @@ const AddBook = ({ setOpen, books, setBooks }) => {
     setOpen(false);
     //Router.reload();
     setIsLoading(false);
+    // window.location.reload();
   };
 
   useEffect(() => {

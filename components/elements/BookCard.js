@@ -28,6 +28,8 @@ const BookCard = ({
   setUpdate,
   book,
   setBook,
+  selectedFile,
+  setSelectedFile,
 }) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -105,13 +107,13 @@ const BookCard = ({
     setUpdate(true);
   };
   return (
-    <div className="p-5 max-w-lg" id={id}>
+    <div className="p-5 max-w-md" id={id}>
       <div className="w-full rounded overflow-hidden shadow-lg bg-stone-300">
         <div className="px-6 py-4 bg-stone-300">
           <div className="font-bold text-3xl mb-2">{title}</div>
           {/*TODO: Image book cover */}
           <div>
-            <img src={cover} alt={cover} width={150} height={200} />
+            <img src={cover ? cover : URL.createObjectURL(selectedFile)} alt={cover} width={150} height={200} />
           </div>
           <p className="text-gray-700 text-xl font-bold">{authors}</p>
           <p className="text-gray-700 text-base mt-4">{comment}</p>

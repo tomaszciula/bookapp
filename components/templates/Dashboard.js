@@ -15,21 +15,7 @@ import Link from "next/link";
 import LoadingSpinner from "../elements/LoadingSpinner";
 
 const Dashboard = () => {
-  const [books, setBooks] = useState([
-    {
-      id: 0,
-      publisher_name: "",
-      author_name: "",
-      title: "",
-      publication_year: 0,
-      publication_number: 0,
-      comment: "",
-      rate: 0,
-      status: 0,
-      cover:
-        "https://res.cloudinary.com/dwadwfrls/image/upload/v1/images/covers/photo-1549849171-09f62448709e_ht5saw",
-    },
-  ]);
+  const [books, setBooks] = useState([]);
   const [book, setBook] = useState(books[0]);
   const [open, setOpen] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -42,6 +28,7 @@ const Dashboard = () => {
   const [changePassword, setChangePassword] = useState(false);
   const [text, setText] = useState();
   const [index, setIndex] = useState(0);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [value, setValue] = useState(new Date());
   const router = useRouter();
   const onOpenModal = () => setOpen(true);
@@ -137,6 +124,11 @@ const Dashboard = () => {
     setIsLoading(true);
     fetchBooks();
   }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchBooks();
+  }, [book]);
 
   useEffect(() => {
     const interval = setInterval(() => setValue(new Date()), 1000);
@@ -331,6 +323,8 @@ const Dashboard = () => {
                         rate={item.rate}
                         status={item.status}
                         cover={item.cover}
+                        selectedFile={selectedFile}
+                        setSelectedFile={setSelectedFile}
                       />
                     );
                   })
@@ -381,6 +375,8 @@ const Dashboard = () => {
                 setUpdate={setUpdate}
                 book={book}
                 setBook={setBook}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
               />
             </div>
           </section>
@@ -426,7 +422,13 @@ const Dashboard = () => {
         )}
       </main>
       <Modal open={open} onClose={onCloseModal} center>
-        <AddBook setOpen={setOpen} books={books} setBooks={setBooks} />
+        <AddBook
+          setOpen={setOpen}
+          books={books}
+          setBooks={setBooks}
+          selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
+        />
       </Modal>
       <Modal open={update} onClose={onCloseModal} center>
         <EditBook setUpdate={setUpdate} book={book} />
