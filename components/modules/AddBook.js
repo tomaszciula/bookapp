@@ -5,10 +5,18 @@ import { API } from "../../constants/path";
 import LoadingSpinner from "../elements/LoadingSpinner";
 import getBooks from "../../api/getBooks";
 import ReactStars from "react-rating-stars-component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) => {
+const AddBook = ({
+  setOpen,
+  books,
+  setBooks,
+  selectedFile,
+  setSelectedFile,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [img, setImg] = useState(null);
+  const [dataUri, setDataUri] = useState("");
   const [book, setBook] = useState({
     publisher_name: "",
     author_name: "",
@@ -18,10 +26,11 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
     comment: "",
     rate: 0,
     status: 0,
-    cover: null,
+    cover: "",
   });
   // TODO: dodawanie zdjęcia
-  {/*
+  {
+    /*
   function getImageFileObject(imageFile) {
     console.log("imageFile: ", imageFile);
     setImg({ img: imageFile.dataURL });
@@ -29,7 +38,8 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
   function runAfterImageDelete(file) {
     console.log({ onDele: file });
   }
-*/}
+*/
+  }
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -39,7 +49,8 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
-    // setBook({ ...book, [book.cover]: selectedFile });
+    console.log("files[0]: ", event.target.files[0]);
+    //setBook({ ...book, [book.cover]: selectedFile });
   };
 
   const handleRate = (newRating) => {
@@ -47,7 +58,27 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
     setBook({ ...book, [book.rate]: newRating });
   };
 
-  const handleAddBook = () => {
+  const setCover = async () => {
+    let blob = await fetch(
+      "https://images.unsplash.com/photo-1598620616337-cb8f766489bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=443&q=80"
+    )
+      .then((r) => r.blob())
+      .then(
+        (blobFile) => new File([blobFile], "plus.jpg", { type: "image/jpeg" })
+      );
+    console.log("blobFile: ", blob);
+    setSelectedFile(blob);
+    console.log("selectedFile 2: ", selectedFile);
+  };
+
+  useEffect(() => {
+    setCover();
+  }, []);
+
+  const handleAddBook = async () => {
+    if (selectedFile === null) {
+      setCover();
+    }
     setBooks([...books, book]);
     setIsLoading(true);
     //event.preventDefault();
@@ -56,6 +87,8 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
+
+    console.log("zawartość selectedFile przed FormData: ", selectedFile);
 
     var formdata = new FormData();
     formdata.append("cover", selectedFile);
@@ -104,7 +137,7 @@ const AddBook = ({ setOpen, books, setBooks, selectedFile, setSelectedFile }) =>
     setOpen(false);
     //Router.reload();
     setIsLoading(false);
-    // window.location.reload();
+    window.location.reload();
   };
 
   useEffect(() => {

@@ -116,7 +116,8 @@ const BookCard = ({
             {/* @ts-ignore */}
             <Image
               src={cover ? cover : URL.createObjectURL(selectedFile)}
-              alt={cover}
+              //src={cover}
+              alt="okładka"
               width={150}
               height={200}
             />
